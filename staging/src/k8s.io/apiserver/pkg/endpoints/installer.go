@@ -107,6 +107,7 @@ func (a *APIInstaller) Install() ([]metav1.APIResource, *restful.WebService, []e
 	}
 	sort.Strings(paths)
 	for _, path := range paths {
+        fmt.Printf("######APIInstaller.Install path: %s\n", path)
 		apiResource, err := a.registerResourceHandlers(path, a.group.Storage[path], ws)
 		if err != nil {
 			errors = append(errors, fmt.Errorf("error in registering resource: %s, %v", path, err))
@@ -516,6 +517,7 @@ func (a *APIInstaller) registerResourceHandlers(path string, storage rest.Storag
 		return nil, fmt.Errorf("unable to get openapi schema for %v: %v", fqKindToRegister, err)
 	}
 	for _, action := range actions {
+        fmt.Printf("####APIInstaller.registerResourceHandlers Verb: %s, Path: %s, AllNamespace: %s\n", action.Verb, action.Path, action.AllNamespaces)
 		producedObject := storageMeta.ProducesObject(action.Verb)
 		if producedObject == nil {
 			producedObject = defaultVersionedObject

@@ -17,6 +17,7 @@ limitations under the License.
 package routes
 
 import (
+    "fmt"
 	"net/http"
 
 	"github.com/emicklei/go-restful"
@@ -53,5 +54,6 @@ func (v Version) Install(c *restful.Container) {
 
 // handleVersion writes the server's version information.
 func (v Version) handleVersion(req *restful.Request, resp *restful.Response) {
+    fmt.Printf("!!!!!!!!!!!!!!handleVersion")
 	responsewriters.WriteRawJSON(http.StatusOK, *v.Version, resp.ResponseWriter)
 }

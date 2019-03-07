@@ -89,11 +89,13 @@ type Info struct {
 
 // Visit implements Visitor
 func (i *Info) Visit(fn VisitorFunc) error {
+    fmt.Printf("Info.Visit method\n")
 	return fn(i, nil)
 }
 
 // Get retrieves the object from the Namespace and Name fields
 func (i *Info) Get() (err error) {
+    fmt.Printf("Info.GET() method, namespace: %s, name: %s\n", i.Namespace, i.Name)
 	obj, err := NewHelper(i.Client, i.Mapping).Get(i.Namespace, i.Name, i.Export)
 	if err != nil {
 		if errors.IsNotFound(err) && len(i.Namespace) > 0 && i.Namespace != metav1.NamespaceDefault && i.Namespace != metav1.NamespaceAll {
@@ -174,6 +176,7 @@ type VisitorList []Visitor
 // Visit implements Visitor
 func (l VisitorList) Visit(fn VisitorFunc) error {
 	for i := range l {
+        fmt.Printf("VisitorList.Visit, %T\n", l[i])
 		if err := l[i].Visit(fn); err != nil {
 			return err
 		}

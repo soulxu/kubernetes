@@ -48,6 +48,7 @@ type getterFunc func(ctx context.Context, name string, req *http.Request, trace 
 func getResourceHandler(scope RequestScope, getter getterFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		trace := utiltrace.New("Get " + req.URL.Path)
+        fmt.Printf("######HTTP GET %s\n", req.URL.Path)
 		defer trace.LogIfLong(500 * time.Millisecond)
 
 		namespace, name, err := scope.Namer.Name(req)

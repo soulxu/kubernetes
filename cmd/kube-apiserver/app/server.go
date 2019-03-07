@@ -109,13 +109,14 @@ cluster's shared state through which all other components interact.`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			verflag.PrintAndExitIfRequested()
 			utilflag.PrintFlags(cmd.Flags())
-
+            fmt.Printf("!!!!!!!NewServerRunOptions before compelete", s)
 			// set default options
 			completedOptions, err := Complete(s)
 			if err != nil {
 				return err
 			}
 
+            fmt.Printf("!!!!!!!NewServerRunOptions after compelete", s)
 			// validate options
 			if errs := completedOptions.Validate(); len(errs) != 0 {
 				return utilerrors.NewAggregate(errs)
@@ -408,6 +409,8 @@ func CreateKubeAPIServerConfig(
 			VersionedInformers: versionedInformers,
 		},
 	}
+
+    fmt.Printf("!!!!!!!The kube API config", config)
 
 	if nodeTunneler != nil {
 		// Use the nodeTunneler's dialer to connect to the kubelet

@@ -684,6 +684,7 @@ func (e *Store) Get(ctx context.Context, name string, options *metav1.GetOptions
 	if err != nil {
 		return nil, err
 	}
+    fmt.Printf("######Store.Get name %s\n", name)
 	if err := e.Storage.Get(ctx, key, options.ResourceVersion, obj, false); err != nil {
 		return nil, storeerr.InterpretGetError(err, e.qualifiedResourceFromContext(ctx), name)
 	}

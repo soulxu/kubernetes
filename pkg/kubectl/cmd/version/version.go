@@ -116,6 +116,8 @@ func (o *VersionOptions) Run() error {
 
 	switch o.Output {
 	case "":
+        fmt.Println("Ttttttt")
+        fmt.Fprintf(o.Out, "Oooooooooo\n")
 		if o.Short {
 			fmt.Fprintf(o.Out, "Client Version: %s\n", clientVersion.GitVersion)
 			if serverVersion != nil {

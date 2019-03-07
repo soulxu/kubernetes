@@ -17,6 +17,7 @@ limitations under the License.
 package endpoints
 
 import (
+    "fmt"
 	"path"
 	"time"
 
@@ -94,6 +95,7 @@ type APIGroupVersion struct {
 // in a slash.
 func (g *APIGroupVersion) InstallREST(container *restful.Container) error {
 	prefix := path.Join(g.Root, g.GroupVersion.Group, g.GroupVersion.Version)
+    fmt.Printf("###########APIGroupVersion.InstallREST: %s\n", prefix)
 	installer := &APIInstaller{
 		group:                        g,
 		prefix:                       prefix,

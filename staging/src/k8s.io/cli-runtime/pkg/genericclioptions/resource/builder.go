@@ -791,11 +791,13 @@ func (b *Builder) visitorResult() *Result {
 
 	// visit items specified by resource and name
 	if len(b.resourceTuples) != 0 {
+        fmt.Println("visitByResource")
 		return b.visitByResource()
 	}
 
 	// visit items specified by name
 	if len(b.names) != 0 {
+        fmt.Println("visitByName")
 		return b.visitByName()
 	}
 
@@ -1070,12 +1072,14 @@ func (b *Builder) visitByPaths() *Result {
 // inputs are consumed by the first execution - use Infos() or Object() on the Result to capture a list
 // for further iteration.
 func (b *Builder) Do() *Result {
+    fmt.Println("Builder.Do method")
 	r := b.visitorResult()
 	r.mapper = b.Mapper()
 	if r.err != nil {
 		return r
 	}
 	if b.flatten {
+        fmt.Println("Builder.Do flatten visitor")
 		r.visitor = NewFlattenListVisitor(r.visitor, b.objectTyper, b.mapper)
 	}
 	helpers := []VisitorFunc{}
@@ -1091,6 +1095,7 @@ func (b *Builder) Do() *Result {
 	}
 	r.visitor = NewDecoratedVisitor(r.visitor, helpers...)
 	if b.continueOnError {
+        fmt.Println("Builder.Do ContinueOnErrorVisitor")
 		r.visitor = ContinueOnErrorVisitor{r.visitor}
 	}
 	return r

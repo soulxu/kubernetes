@@ -389,6 +389,7 @@ func NewRuntimeSorter(objects []runtime.Object, sortBy string) *RuntimeSorter {
 // Run performs the get operation.
 // TODO: remove the need to pass these arguments, like other commands.
 func (o *GetOptions) Run(f cmdutil.Factory, cmd *cobra.Command, args []string) error {
+    fmt.Printf("GetOptions's Run method\n")
 	if len(o.Raw) > 0 {
 		return o.raw(f)
 	}
@@ -456,7 +457,9 @@ func (o *GetOptions) Run(f cmdutil.Factory, cmd *cobra.Command, args []string) e
 
 	allErrs := []error{}
 	errs := sets.NewString()
+    fmt.Println("a")
 	infos, err := r.Infos()
+    fmt.Println("b")
 	if err != nil {
 		allErrs = append(allErrs, err)
 	}
@@ -465,6 +468,7 @@ func (o *GetOptions) Run(f cmdutil.Factory, cmd *cobra.Command, args []string) e
 	objs := make([]runtime.Object, len(infos))
 	for ix := range infos {
 		if o.ServerPrint {
+            fmt.Printf("Builder.Do, print info, %s, %T\n", infos[ix].Object.GetObjectKind().GroupVersionKind().Group, infos[ix].Object)
 			table, err := o.decodeIntoTable(infos[ix].Object)
 			if err == nil {
 				infos[ix].Object = table
@@ -477,7 +481,7 @@ func (o *GetOptions) Run(f cmdutil.Factory, cmd *cobra.Command, args []string) e
 
 		objs[ix] = infos[ix].Object
 	}
-
+    fmt.Println("after build table")
 	sorting, err := cmd.Flags().GetString("sort-by")
 	if err != nil {
 		return err
